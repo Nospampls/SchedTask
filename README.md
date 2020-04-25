@@ -9,6 +9,6 @@ A detailed tutorial on YouTube provides all you need to know to get started. It 
 
 https://www.youtube.com/watch?v=nZHBbSkVUSo&list=PL69rZyCQYu-SrPAZUc2Lj_zsjPLxtI9fv
 
-If you would like to show your appreciation for this tutorial you can securely make a small donation here:
+If you would like to show your appreciation for this library you can securely make a small donation here:
 
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A2J54W4JEHZ6C)
