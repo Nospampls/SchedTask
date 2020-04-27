@@ -1,4 +1,10 @@
 /*
+For a complete series of tutorials see:
+https://www.youtube.com/watch?v=nZHBbSkVUSo&list=PL69rZyCQYu-SrPAZUc2Lj_zsjPLxtI9fv
+	 
+To make a small (secure) appreciation donation see:
+https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A2J54W4JEHZ6C
+
 	SchedTaskT.h - header file for the SchedTaskT template class, derived from SchedBase.  
 	
 	SchedTaskT is a class template.
