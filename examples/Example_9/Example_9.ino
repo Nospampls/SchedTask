@@ -2,12 +2,12 @@
 //		Different words per minute to each LED
 
 /*
-	For the complete series of tutorials see 
+	For the complete series of tutorials see
 	https://www.youtube.com/watch?v=nZHBbSkVUSo&list=PL69rZyCQYu-SrPAZUc2Lj_zsjPLxtI9fv
-	
-	For this example see 
+
+	For this example see
 	https://www.youtube.com/watch?v=SbPebaNopFA
-	
+
 	This example illustrates using SchedTaskT to output Morse code to two LEDs simultaneously.  The code strings are input by the user.
 	The output rate is defined in constants.h WPM in words per minute.
 
@@ -53,8 +53,7 @@ blinker blinker1(1, LED_PIN_1, DOT_DURATION_1);				// define blinker with a LED 
 blinker blinker2(2, LED_PIN_2, DOT_DURATION_2);				// define another blinker with another LED pin number
 
 const int BLINKERS = 2;
-pBlinker blinkers[BLINKERS];												// array of blinkers
-//vector<pBlinker> blinkers;											// a vector of blinker pointers
+pBlinker blinkers[BLINKERS];										// array of blinkers
 
 /********************  Setup() **************************/
 
