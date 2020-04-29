@@ -67,7 +67,7 @@ void setup() {
 	blinkers[0] = &blinker1;
 	blinkers[1] = &blinker2;
 
-	for (int i=0; i<BLINKERS; i++) {					// process all blinkers
+	for (int i=0; i<BLINKERS; i++) {								// process all blinkers
 		pinMode (blinkers[i]->ledPin , OUTPUT); 				// initialize the hardware mode
 
 		blinkers[i]->ContinueTaskT.setFunc(continueOutput);// initialize the sched task to turn on LED
@@ -78,7 +78,7 @@ void setup() {
 
 		readConsole(blinkers[i]);									// read a sentence from the console
 	}
-	for (int i=0; i<BLINKERS; i++) {					// loop thru blinkers now that we've read the sentences
+	for (int i=0; i<BLINKERS; i++) {								// loop thru blinkers now that we've read the sentences
 		continueOutput(blinkers[i]);								// get the first character and start the output
 	}
 }
@@ -121,7 +121,7 @@ void continueOutput(pBlinker pB) {
 
 	char c;
 
-	if (pB->pCode && pB->pulseIdx < pB->pCode[0]+1) {						// is the pulse index valid and more pulses?
+	if (pB->pCode && pB->pulseIdx < pB->pCode[0]+1) {		// is the pulse index valid and more pulses?
 		turnOnLED(pB);													// go output the next pulse
 	}
 	else if (pB->sentenceIdx < pB->sentence.length()-1) {	// any more chars?
