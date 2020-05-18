@@ -19,9 +19,10 @@ Change Log
 
 	4/16/2020 11:58AM Initial Release
 	05/17/2020 20:54 moved ExampleConstants.h
+	05/18/2020 10:39 corrected example number in caption
 */
 
-const char CAPTION[] = "Example 4 Blink LED SchedTask method 2";
+const char CAPTION[] = "Example 3 Blink LED SchedTask method 2";
 
 #include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
 #include <SoftwareSerial.h>										// for console output

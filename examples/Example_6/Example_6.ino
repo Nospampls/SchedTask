@@ -1,4 +1,4 @@
-// Example_6 - illustrating various Types passed as parameters to a dispatched task/function
+// Example_6 - Illustrating various Types passed as parameters to a dispatched task/function using SchedTaskT
 
 /*
 	This sketch provides examples of various types that can be passed to dispatched functions.
@@ -15,6 +15,7 @@ Change Log
 
 	4/18/2020 8:19PM Initial Release
 	05/17/2020 20:54 moved ExampleConstants.h
+	05/18/2020 10:25 added default constructor example
 */
 
 const char CAPTION[] = "Example 6 Types";
@@ -55,6 +56,8 @@ SchedTaskT<SchedBase*> Task5 (1000 +4*INTERVAL, ONESHOT, task5, &Task5); // pass
 SchedTaskT<int*> Task6 (1000 + 5*INTERVAL, ONESHOT, task6, arr);	// pass an array of ints
 
 SchedTaskT<SchedBase**> Task7 (1000 + 6*INTERVAL, ONESHOT, task7, schedArr);	// pass an array of SchedTask pointers
+
+SchedTaskT<int> Empty; // call the default constructor for object Empty; you must 'fill in' with member function calls
 
 /********************  Setup() **************************/
 

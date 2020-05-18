@@ -1,7 +1,6 @@
 // Example_5 - illustrate various methods of scheduling tasks plus the member functions
 
 /*
-
 	For the complete series of tutorials see
 	https://www.youtube.com/watch?v=nZHBbSkVUSo&list=PL69rZyCQYu-SrPAZUc2Lj_zsjPLxtI9fv
 
@@ -16,6 +15,7 @@ Change Log
 
 	4/16/2020 11:59AM Initial Release
 	05/17/2020 20:54 moved ExampleConstants.h
+	05/18/2020 10:15 remove extraneous comment & added default constructor example
 */
 
 const char CAPTION[] = "Example 5 scheduling and member functions";
@@ -32,8 +32,6 @@ void computeTotal();
 void calculate();
 void doSomething();
 void doSomethingElse();
-
-// Schedule a task to run one time 5 seconds from startup
 
 /*
 The SchedTask constructor takes 3 parameters:
@@ -76,6 +74,8 @@ SchedTask MyTask (7000, 2500, computeTotal);					// dispatch computeTotal in 7 s
 SchedTask Another (15000, ONESHOT, calculate);				// dispatch calculate in 15 sec only once
 
 SchedTask Final (NEVER, ONESHOT, NULL);						// placeholder task awaiting modification (NULL function parameter)
+
+SchedTask NoParms;													// use this form for default constructor; you must use member functions to specify parameters
 
 
 /********************  Setup() **************************/
