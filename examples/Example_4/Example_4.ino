@@ -4,21 +4,21 @@
 	This sketch introduces SchedTaskT<> which allows a parameter to be passed to the dispatched function.
 	It illustrates the ease with which two LEDs can be independently controlled.  Each has a different duration and period.
 	Note: by passing the LED pin number only one function is needed to turn them on, and only one to turn them off.
-	
-	For the complete series of tutorials see 
+
+	For the complete series of tutorials see
 	https://www.youtube.com/watch?v=nZHBbSkVUSo&list=PL69rZyCQYu-SrPAZUc2Lj_zsjPLxtI9fv
-	
+
 	For this example see
 	see https://www.youtube.com/watch?v=eIkzXibPwlA
 
 Change Log
 
 	4/16/2020 11:59AM Initial Release
-
+	05/17/2020 20:54 moved ExampleConstants.h
 */
 const char CAPTION[] = "Example 4 Blink 2 LEDs";
 
-#include "ExampleConstants.h"										// contains various constants used to control the sketch behavior
+#include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
 #include <SoftwareSerial.h>
 
 #include <SchedTaskT.h>												// NEWLY ADDED
@@ -47,7 +47,7 @@ void setup() {
 
 	pinMode(LED_PIN_1, OUTPUT);									// initialize the hardware pins
 	pinMode(LED_PIN_2, OUTPUT);
-	
+
 }
 
 /******************* Loop() ********************************/
@@ -62,18 +62,17 @@ void loop() {
 // turn a LED on
 
 void turnOnLED(int pin) {
-	
+
 	digitalWrite(pin, ON);											// turn on the LED
 	if (OUTPUT_ENABLED) Serial << "\n" << millis() << " pin " << pin << " on";
-	
+
 }
 
 // turn a LED off
 
 void turnOffLED(int pin) {
-	
+
 	digitalWrite(pin, OFF);											// turn off the LED
 	if (OUTPUT_ENABLED) Serial << "\n" << millis() << " pin " << pin << " off";
 
 }
-

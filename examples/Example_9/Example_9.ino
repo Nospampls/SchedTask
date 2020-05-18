@@ -14,11 +14,12 @@
 Change Log
 
 	4/18/2020 20:31 Initial Release
+	05/17/2020 20:54 moved ExampleConstants.h
 */
 
 const char CAPTION[] = "Example 9 Morse Code 2 LEDs";
 
-#include "ExampleConstants.h"										// contains various constants used to control the sketch behavior
+#include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
 #include <SoftwareSerial.h>
 #include <SchedTaskT.h>
 

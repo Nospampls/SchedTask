@@ -1,11 +1,11 @@
 // Example_7 - How to insert a 'delay' into code
 
 /*
-	For the complete series of tutorials see 
+	For the complete series of tutorials see
 	https://www.youtube.com/watch?v=nZHBbSkVUSo&list=PL69rZyCQYu-SrPAZUc2Lj_zsjPLxtI9fv
-	
-	For this example see 
-	https://www.youtube.com/watch?v=wWlGXLyDJOs		
+
+	For this example see
+	https://www.youtube.com/watch?v=wWlGXLyDJOs
 
 	A requirement for using SchedTask is that the dispatcher must run continuously in loop() and not be interrupted for long.
 	In other words, each dispatched task must complete its work quickly and relinquish control.
@@ -21,11 +21,12 @@
 Change Log
 
 	4/16/2020 11:59AM Initial Release
+	05/17/2020 20:54 moved ExampleConstants.h
 */
 
 const char CAPTION[] = "Example 7 delay";
 
-#include "ExampleConstants.h"									// contains various constants used to control the sketch behavior
+#include <ExampleConstants.h>									// contains various constants used to control the sketch behavior
 #include <SoftwareSerial.h>
 #include <SchedTask.h>
 #include <SchedTaskT.h>

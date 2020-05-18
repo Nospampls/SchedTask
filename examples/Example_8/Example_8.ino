@@ -2,24 +2,24 @@
 
 /*
 
-	For the complete series of tutorials see 
+	For the complete series of tutorials see
 	https://www.youtube.com/watch?v=nZHBbSkVUSo&list=PL69rZyCQYu-SrPAZUc2Lj_zsjPLxtI9fv
-	
-	For this example see 
-	https://www.youtube.com/watch?v=SbPebaNopFA		
-	
+
+	For this example see
+	https://www.youtube.com/watch?v=SbPebaNopFA
+
 	This example illustrates using SchedTask to output Morse code to the onboard LED.  The code string is input by the user.
 	The output rate is defined in constants.h WPM in words per minute.
 
 Change Log
 
 	4/16/2020 11:59AM Initial Release
-
+	05/17/2020 20:54 moved ExampleConstants.h
 */
 
 const char CAPTION[] = "Example 8 Morse Code 1 LED";
 
-#include "ExampleConstants.h"										// contains various constants used to control the sketch behavior
+#include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
 #include <SoftwareSerial.h>
 #include <SchedTask.h>
 

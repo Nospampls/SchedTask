@@ -1,13 +1,13 @@
 // Example_3 - blink LED (SchedTask method 2)
 
-/*		This method dispatches a task (turnOnLED) to turn the LED on.  turnOnLED then dispatches turnOffLED to turn it off.  
+/*		This method dispatches a task (turnOnLED) to turn the LED on.  turnOnLED then dispatches turnOffLED to turn it off.
 		turnOffLED then schedules turnOnLED to turn it back on and the cycle repeats.
-		
+
 		This illustrates the ability to control when tasks are dispatched at run time.  The periods can be controlled similarly.
 
-		For the complete series of tutorials see 
+		For the complete series of tutorials see
 		https://www.youtube.com/watch?v=nZHBbSkVUSo&list=PL69rZyCQYu-SrPAZUc2Lj_zsjPLxtI9fv
-		
+
 		For this example see
 		see https://www.youtube.com/watch?v=eIkzXibPwlA
 
@@ -18,12 +18,12 @@
 Change Log
 
 	4/16/2020 11:58AM Initial Release
-	
+	05/17/2020 20:54 moved ExampleConstants.h
 */
 
 const char CAPTION[] = "Example 4 Blink LED SchedTask method 2";
 
-#include "ExampleConstants.h"										// contains various constants used to control the sketch behavior
+#include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
 #include <SoftwareSerial.h>										// for console output
 
 #include <SchedTask.h>												// include the SchedTask header file
@@ -46,7 +46,7 @@ void setup() {
 
 	Serial.begin(UART_SPEED);										// init the Monitor window
 	Serial << "\n*** SchedTask " << CAPTION << " ***\n";	// Welcome message to monitor
-	
+
 	pinMode(LED_PIN, OUTPUT);										// initialize the hardware pin for LED
 }
 
@@ -55,7 +55,7 @@ void setup() {
 void loop() {
 
 	SchedBase::dispatcher();										// dispatch any tasks due
-	
+
 }
 
 /********************* Functions ************************************/
@@ -63,21 +63,21 @@ void loop() {
 // turn the LED on
 
 void turnOnLED() {
-	
-	digitalWrite(LED_PIN, ON);										// turn on the LED
-	if (OUTPUT_ENABLED) Serial << "\n\n" << millis() << " On";	
 
-// NEW	
+	digitalWrite(LED_PIN, ON);										// turn on the LED
+	if (OUTPUT_ENABLED) Serial << "\n\n" << millis() << " On";
+
+// NEW
 	OffTask.setNext(DURATION);										// schedule turnOffLED after DURATION (1 sec)
 }
 
 // turn the LED off
 
 void turnOffLED() {
-	
+
 	digitalWrite(LED_PIN, OFF);									// turn off the LED
 	if (OUTPUT_ENABLED) Serial << "\n" << millis() << " Off";
-	
+
 // NEW
 	OnTask.setNext(PERIOD-DURATION);								// schedule turnOnLED after PERIOD-DURATION (2 sec)
 }

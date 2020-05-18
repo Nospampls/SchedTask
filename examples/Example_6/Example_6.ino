@@ -4,22 +4,22 @@
 	This sketch provides examples of various types that can be passed to dispatched functions.
 
 	Notice that passing a vector is one way to pass multiple parameters (of the same Type) to a dispatched function.
-	
-	For the complete series of tutorials see 
+
+	For the complete series of tutorials see
 	https://www.youtube.com/watch?v=nZHBbSkVUSo&list=PL69rZyCQYu-SrPAZUc2Lj_zsjPLxtI9fv
-	
-	For this example see 
-	https://www.youtube.com/watch?v=wWlGXLyDJOs		
+
+	For this example see
+	https://www.youtube.com/watch?v=wWlGXLyDJOs
 
 Change Log
 
 	4/18/2020 8:19PM Initial Release
-
+	05/17/2020 20:54 moved ExampleConstants.h
 */
 
 const char CAPTION[] = "Example 6 Types";
 
-#include "ExampleConstants.h"										// contains various constants used to control the sketch behavior
+#include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
 #include <SoftwareSerial.h>
 #include <SchedTaskT.h>
 

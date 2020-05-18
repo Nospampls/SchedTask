@@ -3,9 +3,9 @@
 /*
 	This method uses one Task to schedule the turn-on function and another for the turn-off function.
 
-	For the complete series of tutorials see 
+	For the complete series of tutorials see
 	https://www.youtube.com/watch?v=nZHBbSkVUSo&list=PL69rZyCQYu-SrPAZUc2Lj_zsjPLxtI9fv
-	
+
 	For this example see
 	see https://www.youtube.com/watch?v=nZHBbSkVUSo&t=7s
 
@@ -15,14 +15,14 @@
 
 
 Change Log
-	
+
 	4/16/2020 11:57AM Initial Release
-	
+	05/17/2020 20:54 moved ExampleConstants.h
 */
 
 const char CAPTION[] = "Example 2 Blink LED SchedTask method 1";
 
-#include "ExampleConstants.h"										// contains various constants used to control the sketch behavior
+#include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
 #include <SoftwareSerial.h>										// for console output
 
 // NEW
@@ -42,7 +42,7 @@ void setup() {
 
 	Serial.begin(UART_SPEED);										// init the Monitor window
 	Serial << "\n*** SchedTask " << CAPTION << " ***\n";	// Welcome message to monitor
-	
+
 	pinMode(LED_PIN, OUTPUT);										// initialize the hardware pin for LED
 }
 
@@ -50,7 +50,7 @@ void setup() {
 
 void loop() {
 
-/* REMOVED	
+/* REMOVED
 	turnOnLED();														// turn on the LED
 	delay (1000);														// leave it on for 1 sec
 	turnOffLED();														// turn off the LED
@@ -59,7 +59,7 @@ void loop() {
 
 // NEW
 	SchedBase::dispatcher();										// dispatch any tasks due
-	
+
 }
 
 /********************* Functions ************************************/
@@ -67,15 +67,15 @@ void loop() {
 // turn the LED on
 
 void turnOnLED() {
-	
+
 	digitalWrite(LED_PIN, ON);										// turn on the LED
-	if (OUTPUT_ENABLED) Serial << "\n\n" << millis() << " On";	
+	if (OUTPUT_ENABLED) Serial << "\n\n" << millis() << " On";
 }
 
 // turn the LED off
 
 void turnOffLED() {
-	
+
 	digitalWrite(LED_PIN, OFF);									// turn off the LED
 	if (OUTPUT_ENABLED) Serial << "\n" << millis() << " Off";
 }
