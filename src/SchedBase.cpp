@@ -13,6 +13,7 @@ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A2J54W4JEHZ
 		10/21/2017 1:11PM clean up
 		3/12/2020 1:55PM callFunc virtual
 		05/17/2020 17:56 move definitions
+		7/4/2020 10:25AM correct handling of NEVER if passed in setNext()
 */
 
 #include <SchedBase.h>
@@ -50,4 +51,18 @@ int SchedBase::addTask(SchedBase* pBase) {						// add a new task to the dispatc
 		tasks.push_back(pBase);
 }
 
-void SchedBase::setNext(unsigned long nxt) {next = nxt==NOW?millis():millis() + nxt;}	// set new Next
+void SchedBase::setNext(unsigned long nxt) {						// set a new NEXT value
+	
+	if (nxt == NOW) {														// NOW?
+		next = millis();													// use current time in ms
+	}
+	else {
+		if (nxt == NEVER) {												// NEVER?
+			next = NEVER;													// use 0xFFFFFFFF
+		}
+		else {																// neither NOW nor NEVER
+			next = millis() + nxt;										// add it to current millis() time
+		}
+	}
+}
+

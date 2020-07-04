@@ -16,6 +16,7 @@ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A2J54W4JEHZ
 		3/12/2020 9:04AM more virtual functions
 		4/24/2020 5:07PM changed #include for vector.h
 		05/17/2020 14:26 remove NEVER, NOW, ONESHOT consts and make them #defines
+		7/4/2020 10:44AM remove obsolete commented out setNext definition, added comment to declaration
 */
 
 #ifndef SchedBase_h
@@ -41,8 +42,7 @@ class SchedBase {
 		SchedBase (unsigned long next, unsigned long period);	// constructor declaration
 
 		static void dispatcher ();																// see if any task is ready for dispatch (static -- no object required); call as SchedBase::dispatcher() in loop()
-//		void setNext(unsigned long nxt) {next = nxt==NOW?millis():millis() + nxt;}	// set new Next
-		void setNext(unsigned long nxt);
+		void setNext(unsigned long nxt);														// set new Next declaration
 		void setPeriod(unsigned long per) {period = per;} 								// set a new period
 		virtual void setFunc(pFunc) {;};														// set the function to dispatch (virtual -- actual is in the derived SchedTaskT class
 		unsigned long getNext() {return next;}												// get Next
