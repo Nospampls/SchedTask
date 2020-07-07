@@ -14,13 +14,14 @@ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A2J54W4JEHZ
 		3/12/2020 1:55PM callFunc virtual
 		05/17/2020 17:56 move definitions
 		7/4/2020 10:25AM correct handling of NEVER if passed in setNext()
+		7/6/2020 10:54PM handle millis() overflow at 49 days
 */
 
 #include <SchedBase.h>
 
 // initialize static member(s) of SchedBase class
 
-vector<SchedBase*> SchedBase::tasks;								// not sure why this is necessary
+vector<SchedBase*> SchedBase::tasks;
 
 
 SchedBase::SchedBase (unsigned long nxt, unsigned long intval) : period(intval), next(nxt) {}	// constructor
@@ -30,18 +31,20 @@ void SchedBase::dispatcher() {										// dispatcher
 	for (int i=0; i<tasks.size(); i++) {							// loop thru the tasks in the array
 
 		if (tasks[i]->getFunc() != NULL) { 							// only if the function to call is valid
+		
+			if (tasks[i]->next != NEVER)  {							// do not dispatch if Next is NEVER
 
-			unsigned long now = millis();								// get the current time
-
-			if (now >= tasks[i]->next) {								// time to run the next task in the array?
-
-				if (tasks[i]->period == ONESHOT) {					// one-shot task?
-					tasks[i]->next = NEVER;								// ensure it won't run again
+				unsigned long now = millis();							// get the current time
+	
+				if ((signed long)(tasks[i]->next - now) <= 0) {	// time to run the next task in the array? (see https://arduino.stackexchange.com/questions/12587/how-can-i-handle-the-millis-rollover/12588#12588)
+					if (tasks[i]->period == ONESHOT) {				// one-shot task?
+						tasks[i]->next = NEVER;							// ensure it won't run again
+					}
+					else {													// periodic task
+						tasks[i]->next = tasks[i]->next + tasks[i]->period; // compute the next time to dispatch it (when it should have run + period)
+					}
+					tasks[i]->callFunc();								// call the derived class function to dispatch the task
 				}
-				else {														// periodic task
-					tasks[i]->next = tasks[i]->next + tasks[i]->period; // compute the next time to dispatch it (when it should have run + period)
-				}
-				tasks[i]->callFunc();									// call the derived class function to dispatch the task
 			}
 		}
 	}

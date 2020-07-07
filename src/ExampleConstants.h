@@ -5,6 +5,7 @@ ExampleConstants.h for SchedTask examples (only)
 change log
 
 4/17/2020 2:29PM Initial Release
+7/7/2020 4:12PM make OUTPUT_ENABLED variable not const so user can easily change it in sketch
 
 */
 #ifndef ExampleConstants_h
@@ -18,7 +19,7 @@ template<class T> inline Print &operator <<(Print &obj, T arg) { obj.print(arg);
 const bool TRUE 					= 1;
 const bool FALSE 					= 0;
 
-const bool OUTPUT_ENABLED		= TRUE;			// output to monitor?
+bool OUTPUT_ENABLED				= TRUE;			// output to monitor?
 
 const int ON						= HIGH;
 const int OFF						= LOW;

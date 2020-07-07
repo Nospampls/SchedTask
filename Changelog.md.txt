@@ -1,0 +1,22 @@
+1.0.0
+5/9/2020
+
+Intial release
+
+1.0.1
+5/18/2020
+
+Move some definitions out of .h files so that SchedTask.h can be used in .cpp files.  Otherwise duplicate definitions occur.
+
+1.0.2
+7/4/2020
+
+Corrected SchedBase.cpp which was not handling setNext(NEVER) correctly.
+
+1.0.3
+7/7/2020
+
+Changed the dispatcher to fix exposure to millis() overflow at 49 days.
+Previously the library would fail at that point.
+
+Now it should work provided any task scheduled in the future is less than about 24 days hence.
