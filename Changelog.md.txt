@@ -26,3 +26,9 @@ Now it should work provided any task scheduled in the future is less than about 
 
 The IDE Library Manager was not showing the latest version number.
 Corrected library.properties and set the Tag to 1.0.4.
+
+1.0..5
+8/20/202013
+
+Use linked list rather than vector for task list.
+Add support for task iterations.

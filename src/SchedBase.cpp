@@ -15,47 +15,47 @@ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A2J54W4JEHZ
 		05/17/2020 17:56 move definitions
 		7/4/2020 10:25AM correct handling of NEVER if passed in setNext()
 		7/6/2020 10:54PM handle millis() overflow at 49 days
+		08/20/2020 23:48 use linked list of tasks rather than vector of tasks
 */
 
 #include <SchedBase.h>
 
 // initialize static member(s) of SchedBase class
-
-vector<SchedBase*> SchedBase::tasks;
-
+SchedBase* SchedBase::tasksHead = NULL;
+int SchedBase::taskCount = 0;
 
 SchedBase::SchedBase (unsigned long nxt, unsigned long intval) : period(intval), next(nxt) {}	// constructor
 
 void SchedBase::dispatcher() {										// dispatcher
 
-	for (int i=0; i<tasks.size(); i++) {							// loop thru the tasks in the array
+	SchedBase* pTask = tasksHead;										// point to the first task in the list
 
-		if (tasks[i]->getFunc() != NULL) { 							// only if the function to call is valid
-		
-			if (tasks[i]->next != NEVER)  {							// do not dispatch if Next is NEVER
-
+	while (pTask) {														// loop thru the task linked list
+		if (pTask->getFunc() != NULL) { 								// only if the function to call is valid
+			if (pTask->next != NEVER)  {								// do not dispatch if Next is NEVER
 				unsigned long now = millis();							// get the current time
-	
-				if ((signed long)(tasks[i]->next - now) <= 0) {	// time to run the next task in the array? (see https://arduino.stackexchange.com/questions/12587/how-can-i-handle-the-millis-rollover/12588#12588)
-					if (tasks[i]->period == ONESHOT) {				// one-shot task?
-						tasks[i]->next = NEVER;							// ensure it won't run again
+				if ((signed long)(pTask->next - now) <= 0) {		// time to run the next task in the array? (see https://arduino.stackexchange.com/questions/12587/how-can-i-handle-the-millis-rollover/12588#12588)
+					if (pTask->period == ONESHOT) {					// one-shot task?
+						pTask->next = NEVER;								// ensure it won't run again
 					}
 					else {													// periodic task
-						tasks[i]->next = tasks[i]->next + tasks[i]->period; // compute the next time to dispatch it (when it should have run + period)
+						pTask->next = pTask->next + pTask->period; // compute the next time to dispatch it (when it should have run + period)
 					}
-					tasks[i]->callFunc();								// call the derived class function to dispatch the task
+					pTask->callFunc();									// call the derived class function to dispatch the task
 				}
 			}
 		}
+		pTask = pTask->taskLink;										// get link to the next task, if any
 	}
 }
 
 int SchedBase::addTask(SchedBase* pBase) {						// add a new task to the dispatch list
-		tasks.push_back(pBase);
+		pBase->taskLink = tasksHead;									// link this task to previous head task
+		tasksHead = pBase;												// this task is now at the head
+		taskCount++;														// update the task count
 }
 
 void SchedBase::setNext(unsigned long nxt) {						// set a new NEXT value
-	
 	if (nxt == NOW) {														// NOW?
 		next = millis();													// use current time in ms
 	}
@@ -68,4 +68,3 @@ void SchedBase::setNext(unsigned long nxt) {						// set a new NEXT value
 		}
 	}
 }
-

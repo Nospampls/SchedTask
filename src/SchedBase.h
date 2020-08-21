@@ -17,22 +17,23 @@ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A2J54W4JEHZ
 		4/24/2020 5:07PM changed #include for vector.h
 		05/17/2020 14:26 remove NEVER, NOW, ONESHOT consts and make them #defines
 		7/4/2020 10:44AM remove obsolete commented out setNext definition, added comment to declaration
+		08/20/2020 23:54 use linked list of tasks rather than vector of tasks
 */
 
 #ifndef SchedBase_h
 #define SchedBase_h
 
-#define NEVER -1
-#define NOW 0
-#define ONESHOT 0
+// sched task value for next = never (wait for a change to dispatch)
+#define NEVER 0xFFFFFFFF
+
+// sched task value for next = now (dispatch immediately)
+#define NOW 0UL
+
+// sched task value for period = one shot (dispatch only once at t=next)
+#define ONESHOT 0UL
 
 #include <Arduino.h>
-#include <SchedTaskLib\vector.h>
-/*
-const unsigned long NEVER		= -1;			// sched task value for next = never (wait for a change to dispatch)
-const unsigned long NOW			= 0UL;		// sched task value for next = now (dispatch immediately)
-const unsigned long ONESHOT	= 0UL;		// sched task value for period = one shot (dispatch only once at t=next)
-*/
+
 typedef void (*pFunc)();  // pFunc is of Type pointer to a function that takes no argument and returns void
 
 class SchedBase {
@@ -44,21 +45,25 @@ class SchedBase {
 		static void dispatcher ();																// see if any task is ready for dispatch (static -- no object required); call as SchedBase::dispatcher() in loop()
 		void setNext(unsigned long nxt);														// set new Next declaration
 		void setPeriod(unsigned long per) {period = per;} 								// set a new period
+		void setIterations(unsigned long iter) {iterations = iter;}
 		virtual void setFunc(pFunc) {;};														// set the function to dispatch (virtual -- actual is in the derived SchedTaskT class
 		unsigned long getNext() {return next;}												// get Next
 		unsigned long getPeriod() {return period;}										// get Period
+		unsigned long getIterations() {return iterations;}
 		virtual pFunc getFunc() {;};															// get function pointer  - don't see a use for this
-		int getTaskCount() {return tasks.size();};										// get task count
-
+		int getTaskCount() {return taskCount;}												// get task count
 
 	protected:
 
 		// only one copy of static members for the class, not one per object/instance
-		static vector<SchedBase*> tasks;														// the array of tasks to dispatch
+		static SchedBase* tasksHead;															// head of linked list of tasks
+		static int taskCount;																	// task taskCount
 
-		unsigned long period;																	// period
 		unsigned long next;																		// next
+		unsigned long period;																	// period
+		unsigned long iterations;																// iterations
 		virtual void callFunc() {;};															// have the derived class call the task
+		SchedBase* taskLink;																		// link to next task in list
 		int addTask(SchedBase* pBase);														// add another task to the list
 };
 
