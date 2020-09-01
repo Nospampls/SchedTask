@@ -16,15 +16,28 @@ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A2J54W4JEHZ
 		7/4/2020 10:25AM correct handling of NEVER if passed in setNext()
 		7/6/2020 10:54PM handle millis() overflow at 49 days
 		08/20/2020 23:48 use linked list of tasks rather than vector of tasks
+		08/21/2020 12:57 add support for iterations, backward compatible
 */
 
 #include <SchedBase.h>
+
+
+#include <SoftwareSerial.h>										// for console output
+template<class T> inline Print &operator <<(Print &obj, T arg) { obj.print(arg); return obj; } // allow use of Serial <<
 
 // initialize static member(s) of SchedBase class
 SchedBase* SchedBase::tasksHead = NULL;
 int SchedBase::taskCount = 0;
 
-SchedBase::SchedBase (unsigned long nxt, unsigned long intval) : period(intval), next(nxt) {}	// constructor
+SchedBase::SchedBase (unsigned long nxt, unsigned long intval) : next(nxt), period(intval), iterations(-1)  {	// constructor definition
+	taskID = taskCount;
+}
+SchedBase::SchedBase (unsigned long nxt, unsigned long intval, long iters) : next(nxt), period(intval), iterations(iters)  {	// constructor definition
+	taskID = taskCount;
+}
+SchedBase::SchedBase () : next(NEVER), period(ONESHOT), iterations(-1) {	// default constructor definition
+	taskID = taskCount;
+}
 
 void SchedBase::dispatcher() {										// dispatcher
 
@@ -34,12 +47,22 @@ void SchedBase::dispatcher() {										// dispatcher
 		if (pTask->getFunc() != NULL) { 								// only if the function to call is valid
 			if (pTask->next != NEVER)  {								// do not dispatch if Next is NEVER
 				unsigned long now = millis();							// get the current time
+				if (pTask->iterations == 0) {							// iterations were specified and went to zero
+					pTask->next = NEVER;									// prevent future dispatches
+					pTask->iterations = -1;								// no more iterations
+					break;													// done with this task, do not dispatch
+				}
+
+// proceed if iterations not specified or some remaining
 				if ((signed long)(pTask->next - now) <= 0) {		// time to run the next task in the array? (see https://arduino.stackexchange.com/questions/12587/how-can-i-handle-the-millis-rollover/12588#12588)
 					if (pTask->period == ONESHOT) {					// one-shot task?
 						pTask->next = NEVER;								// ensure it won't run again
 					}
 					else {													// periodic task
 						pTask->next = pTask->next + pTask->period; // compute the next time to dispatch it (when it should have run + period)
+					}
+					if (pTask->iterations > 0) {						// iterations specified and some remaining
+						pTask->iterations--;								// decrement iterations remaining
 					}
 					pTask->callFunc();									// call the derived class function to dispatch the task
 				}

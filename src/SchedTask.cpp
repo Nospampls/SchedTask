@@ -6,10 +6,13 @@ Change log
 */
 #include <SchedTask.h>
 
-SchedTask::SchedTask (unsigned long nxt, unsigned long intval, pFunc fnc) : func(fnc), SchedBase(nxt, intval) { // constructor definition
+SchedTask::SchedTask (unsigned long nxt, unsigned long intval, pFunc fnc) : SchedBase(nxt, intval), func(fnc) { // constructor definition
 	addTask(this);																					// add this new task to the dispatch list
 }
 
-SchedTask::SchedTask() : func(NULL), SchedBase(NEVER, ONESHOT) {					// default constructor definition
+SchedTask::SchedTask (unsigned long nxt, unsigned long intval, long iters, pFunc fnc) : SchedBase(nxt, intval, iters), func(fnc) { // constructor definition
+	addTask(this);																					// add this new task to the dispatch list
+}
+SchedTask::SchedTask() : SchedBase(NEVER, ONESHOT), func(NULL) {					// default constructor definition
 	addTask(this);
 }

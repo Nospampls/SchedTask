@@ -41,17 +41,20 @@ class SchedBase {
 	public:
 
 		SchedBase (unsigned long next, unsigned long period);	// constructor declaration
+		SchedBase (unsigned long next, unsigned long period, long iterations);
+		SchedBase ();																				// default constructor declaration
 
 		static void dispatcher ();																// see if any task is ready for dispatch (static -- no object required); call as SchedBase::dispatcher() in loop()
 		void setNext(unsigned long nxt);														// set new Next declaration
 		void setPeriod(unsigned long per) {period = per;} 								// set a new period
-		void setIterations(unsigned long iter) {iterations = iter;}
+		void setIterations(int iter) {iterations = iter;}
 		virtual void setFunc(pFunc) {;};														// set the function to dispatch (virtual -- actual is in the derived SchedTaskT class
 		unsigned long getNext() {return next;}												// get Next
 		unsigned long getPeriod() {return period;}										// get Period
-		unsigned long getIterations() {return iterations;}
+		int getIterations() {return iterations;}
 		virtual pFunc getFunc() {;};															// get function pointer  - don't see a use for this
 		int getTaskCount() {return taskCount;}												// get task count
+		int getTaskID() {return taskID;}														// 0, 1, ... in order of instantiation
 
 	protected:
 
@@ -59,9 +62,10 @@ class SchedBase {
 		static SchedBase* tasksHead;															// head of linked list of tasks
 		static int taskCount;																	// task taskCount
 
+		int taskID;																					// used for testing
 		unsigned long next;																		// next
 		unsigned long period;																	// period
-		unsigned long iterations;																// iterations
+		int iterations;																			// iterations (-1 means not specified)
 		virtual void callFunc() {;};															// have the derived class call the task
 		SchedBase* taskLink;																		// link to next task in list
 		int addTask(SchedBase* pBase);														// add another task to the list

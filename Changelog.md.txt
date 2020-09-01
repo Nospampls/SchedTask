@@ -1,12 +1,12 @@
 1.0.0
 5/9/2020
 
-Intial release
+Initial release
 
 1.0.1
 5/18/2020
 
-Move some definitions out of .h files so that SchedTask.h can be used in .cpp files.  Otherwise duplicate definitions occur.
+Moved some definitions out of .h files so that SchedTask.h can be used in .cpp files.  Otherwise duplicate definitions occur.
 
 1.0.2
 7/4/2020
@@ -27,8 +27,10 @@ Now it should work provided any task scheduled in the future is less than about 
 The IDE Library Manager was not showing the latest version number.
 Corrected library.properties and set the Tag to 1.0.4.
 
-1.0..5
+1.0.5
 8/20/202013
 
 Use linked list rather than vector for task list.
-Add support for task iterations.
+Added support for task iterations to limit dispatches.
+Added Example_10 and Example_11 to illustrate use of iterations.
+Expanded documentation in comments in SchedTask.h and SchedTastT.h.
