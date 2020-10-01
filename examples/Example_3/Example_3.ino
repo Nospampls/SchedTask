@@ -1,7 +1,7 @@
 // Example_3 - blink LED (SchedTask method 2)
 
 /*		This method dispatches a task (turnOnLED) to turn the LED on.  turnOnLED then dispatches turnOffLED to turn it off.
-		turnOffLED then schedules turnOnLED to turn it back on and the cycle repeats.
+		turnOffLED then re-schedules turnOnLED to turn it back on and the cycle repeats.
 
 		This illustrates the ability to control when tasks are dispatched at run time.  The periods can be controlled similarly.
 
@@ -20,13 +20,12 @@ Change Log
 	4/16/2020 11:58AM Initial Release
 	05/17/2020 20:54 moved ExampleConstants.h
 	05/18/2020 10:39 corrected example number in caption
+	09/16/2020 16:30 remove SoftwareSerial.h
 */
 
 const char CAPTION[] = "Example 3 Blink LED SchedTask method 2";
 
 #include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
-#include <SoftwareSerial.h>										// for console output
-
 #include <SchedTask.h>												// include the SchedTask header file
 
 void turnOnLED();														// forward declarations
@@ -40,7 +39,6 @@ SchedTask OffTask (1000, 3000, turnOffLED);					// define the turn off task (dis
 // NEW
 SchedTask OnTask (NOW, ONESHOT, turnOnLED);					// define the turn on task (dispatch now, one time)
 SchedTask OffTask (NEVER, ONESHOT, turnOffLED);				// define the turn off task (dispatch never)
-
 
 /********************  Setup() **************************/
 void setup() {

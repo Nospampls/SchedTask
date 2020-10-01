@@ -284,6 +284,7 @@ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A2J54W4JEHZ
 		08/21/2020 11:23 improved comments
 		08/21/2020 14:43 support iterations
 		09/01/2020 14:08 added documentation from README.md
+		09/20/2020 19:26 inherit from SchedBase directly
 */
 
 #ifndef SchedTaskT_h
@@ -291,38 +292,51 @@ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A2J54W4JEHZ
 
 #include <SchedBase.h>
 
-template <typename T> class SchedTaskT : public SchedBase {
+template <typename T=int>
+class SchedTaskT : public SchedBase {
 
-	typedef void (*pFuncT)(T);  // pFuncT is of Type pointer to a function that takes a T argument and returns void
+	typedef void (*pFuncT)(T);  	// pFuncT is of Type pointer to a function that takes a T argument and returns void
+	typedef void (*pFunc)();		// pFunct is of Type pointer to a function that takes no parms and returns void
 
 	public:
-
-		SchedTaskT(unsigned long next, unsigned long period, pFuncT fun, T); // constructor w/ parameter to pass
-		SchedTaskT(unsigned long next, unsigned long period, long iterations, pFuncT fun, T); // constructor w/ parameter to pass
+		SchedTaskT(unsigned long next, unsigned long period, pFuncT fun, T arg); // constructor w/ parameter to pass
+		SchedTaskT(unsigned long next, unsigned long period); // constructor with only next and period
+		SchedTaskT(unsigned long next, unsigned long period, pFuncT); // constructor with func, no parameter
+		SchedTaskT(unsigned long next, unsigned long period, long iterations, pFuncT fun, T arg); // constructor w/ parameter to pass
+		SchedTaskT(unsigned long next, unsigned long period, long iterations, pFuncT fun);
+		SchedTaskT(unsigned long next, unsigned long period, long iterations); // constructor with next, period, iterations
 		SchedTaskT();														// default constructor declaration
+		~SchedTaskT();														// destructor
 
-		virtual void setFunc(pFuncT fnc) {func = fnc;}
-		virtual pFunc getFunc() {return(func);}					// get the function pointer
+		void setFunc(pFuncT pF) {func = pF;}						// set new function pointer
+		void setFuncT(pFuncT pF) {func = pF;}						// alternate
+		pFuncT getFuncT() {return func;}								// return the function pointer
 		void setParm(T aType) {parm = aType;}						// set the parameter to pass to the function
 		T getParm() {return parm;}										// get the parameter to pass to the function
 
-	protected:
+	private:
 
 		T parm;																// parameter of type T to be passed to dispatched task
-		pFuncT func;															// address of function to call with parameter of type T
-		virtual void callFunc() {func(parm);}						// call the function with parameter
+		pFuncT func;														// address of function to call with parameter of type T
+
+		void setFunc(pFunc pF) {;} 									// overrides pure virtual in base so this class not abstract
+		pFunc getFunc() {;} 												// overrides pure virtual in base so this class not abstract
+
+		virtual void callFunc() {func(parm);}						// call the function with parameter on behalf of dispatcher
+		virtual bool checkFunc() {return func != NULL;}			// whether func is non-NULL
 };
 
-template <typename T> SchedTaskT<T>::SchedTaskT (unsigned long nxt, unsigned long intval, pFuncT pFnc, T arg) : SchedBase(nxt, intval), func(pFnc), parm(arg) { // constructor template
-	SchedBase::addTask(this);											// add this task to the list to be dispatched
-}
+typedef SchedTaskT<SchedBase*>* SchedTaskTptr;					// used for pointer to SchedTaskT object
 
-template <typename T> SchedTaskT<T>::SchedTaskT (unsigned long nxt, unsigned long intval, long iters, pFuncT pFnc, T arg) : SchedBase(nxt, intval, iters), func(pFnc), parm(arg) { // constructor template
-	SchedBase::addTask(this);											// add this task to the list to be dispatched
-}
+// constructor templates
+template <typename T> SchedTaskT<T>::SchedTaskT (unsigned long nxt, unsigned long intval, pFuncT pFnc, T arg) : SchedBase(nxt, intval), func(pFnc), parm(arg) {} // constructor template
+template <typename T> SchedTaskT<T>::SchedTaskT (unsigned long nxt, unsigned long intval) : SchedBase (nxt, intval) {}
+template <typename T> SchedTaskT<T>::SchedTaskT (unsigned long nxt, unsigned long intval, pFuncT pFnc) : SchedBase (nxt, intval), func(pFnc) {}
+template <typename T> SchedTaskT<T>::SchedTaskT (unsigned long nxt, unsigned long intval, long iters, pFuncT pFnc, T arg) : SchedBase(nxt, intval, iters), func(pFnc), parm(arg) {} // constructor template
+template <typename T> SchedTaskT<T>::SchedTaskT (unsigned long nxt, unsigned long intval, long iters, pFuncT pFnc) : SchedBase(nxt, intval, iters), func(pFnc) {} // constructor template
 
-template <typename T> SchedTaskT<T>::SchedTaskT() : SchedBase(), func(NULL), parm(NULL) {	// default constructor template
-	SchedBase::addTask(this);
-}
+template <typename T> SchedTaskT<T>::SchedTaskT (unsigned long nxt, unsigned long intval, long iters) {}
+template <typename T> SchedTaskT<T>::SchedTaskT() : SchedBase(), func(nullptr), parm(0) {}	// default constructor template
+template <typename T> SchedTaskT<T>::~SchedTaskT() {;}													// destructor
 
 #endif

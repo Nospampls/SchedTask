@@ -17,34 +17,38 @@ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A2J54W4JEHZ
 		7/6/2020 10:54PM handle millis() overflow at 49 days
 		08/20/2020 23:48 use linked list of tasks rather than vector of tasks
 		08/21/2020 12:57 add support for iterations, backward compatible
+		09/15/2020 15:22 addTask now returns task count
+		09/16/2020 16:18 remove SoftwareSerial
+		09/30/2020 16:40 minor changes, add destructor
 */
 
 #include <SchedBase.h>
 
-
-#include <SoftwareSerial.h>										// for console output
+// only used for testing
 template<class T> inline Print &operator <<(Print &obj, T arg) { obj.print(arg); return obj; } // allow use of Serial <<
 
 // initialize static member(s) of SchedBase class
-SchedBase* SchedBase::tasksHead = NULL;
+SchedBase* SchedBase::tasksHead = nullptr;
 int SchedBase::taskCount = 0;
 
+// constructor definitions
 SchedBase::SchedBase (unsigned long nxt, unsigned long intval) : next(nxt), period(intval), iterations(-1)  {	// constructor definition
 	taskID = taskCount;
+	addTask(this);											// add this task to the list to be dispatched
 }
 SchedBase::SchedBase (unsigned long nxt, unsigned long intval, long iters) : next(nxt), period(intval), iterations(iters)  {	// constructor definition
 	taskID = taskCount;
+	addTask(this);											// add this task to the list to be dispatched
 }
 SchedBase::SchedBase () : next(NEVER), period(ONESHOT), iterations(-1) {	// default constructor definition
 	taskID = taskCount;
+	addTask(this);											// add this task to the list to be dispatched
 }
-
+// Dispatcher
 void SchedBase::dispatcher() {										// dispatcher
-
 	SchedBase* pTask = tasksHead;										// point to the first task in the list
-
 	while (pTask) {														// loop thru the task linked list
-		if (pTask->getFunc() != NULL) { 								// only if the function to call is valid
+		if (pTask->checkFunc()) { 										// only if the function to call is valid
 			if (pTask->next != NEVER)  {								// do not dispatch if Next is NEVER
 				unsigned long now = millis();							// get the current time
 				if (pTask->iterations == 0) {							// iterations were specified and went to zero
@@ -52,7 +56,6 @@ void SchedBase::dispatcher() {										// dispatcher
 					pTask->iterations = -1;								// no more iterations
 					break;													// done with this task, do not dispatch
 				}
-
 // proceed if iterations not specified or some remaining
 				if ((signed long)(pTask->next - now) <= 0) {		// time to run the next task in the array? (see https://arduino.stackexchange.com/questions/12587/how-can-i-handle-the-millis-rollover/12588#12588)
 					if (pTask->period == ONESHOT) {					// one-shot task?
@@ -71,13 +74,14 @@ void SchedBase::dispatcher() {										// dispatcher
 		pTask = pTask->taskLink;										// get link to the next task, if any
 	}
 }
-
+// addTask() to the linked list
 int SchedBase::addTask(SchedBase* pBase) {						// add a new task to the dispatch list
 		pBase->taskLink = tasksHead;									// link this task to previous head task
 		tasksHead = pBase;												// this task is now at the head
-		taskCount++;														// update the task count
+		taskID = taskCount++;											// assign task ID and bump task count
+		return taskCount;													// update the task count and return it
 }
-
+// setNext()
 void SchedBase::setNext(unsigned long nxt) {						// set a new NEXT value
 	if (nxt == NOW) {														// NOW?
 		next = millis();													// use current time in ms
@@ -90,4 +94,24 @@ void SchedBase::setNext(unsigned long nxt) {						// set a new NEXT value
 			next = millis() + nxt;										// add it to current millis() time
 		}
 	}
+}
+SchedBase::~SchedBase() {												// destructor
+	SchedBase* prev = tasksHead;										// init ptr to previous task
+	for (int i=0; i<taskCount; i++) {								// loop through the linked tasks
+		if (this == tasksHead) {										// destructing the first task?
+			tasksHead = taskLink;										// head is now the second task
+			taskCount--;													// decr task count
+			break;															// we're done
+		}
+		else {																// not first task
+			if (prev->taskLink == this) {								// if this is the one to destruct
+				prev->taskLink = this->taskLink;						// point prev task to next task (remove this one)
+				taskCount--;												// decr task count
+				break;														// we're done
+			}
+			else {															// this is not the one to destruct
+				prev = this;												// so update the prev task pointer to this one
+			}
+		}
+	}																			// and go around again
 }

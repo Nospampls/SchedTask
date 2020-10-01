@@ -24,7 +24,6 @@ Change Log
 const char CAPTION[] = "Example 11 Blink LED, iterations";
 
 #include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
-#include <SoftwareSerial.h>										// for console output
 #include <SchedTask.h>												// include the SchedTask header file
 #include <SchedTaskT.h>
 

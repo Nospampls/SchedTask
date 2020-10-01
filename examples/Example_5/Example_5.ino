@@ -20,7 +20,6 @@ Change Log
 
 const char CAPTION[] = "Example 5 scheduling and member functions";
 
-#include <SoftwareSerial.h>
 #include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
 #include <SchedTask.h>												// Task Scheduler header file
 
@@ -68,7 +67,6 @@ SchedTask Task8 (NEVER, ONESHOT, NULL);						// function not specified, placehol
 
 SchedTask RealTask (5000, ONESHOT, computeSum);				// dispatch computeSum in 5 seconds
 
-
 SchedTask MyTask (7000, 2500, computeTotal);					// dispatch computeTotal in 7 sec and every 2.5 sec thereafter
 
 SchedTask Another (15000, ONESHOT, calculate);				// dispatch calculate in 15 sec only once
@@ -77,13 +75,11 @@ SchedTask Final (NEVER, ONESHOT, NULL);						// placeholder task awaiting modifi
 
 SchedTask NoParms;													// use this form for default constructor; you must use member functions to specify parameters
 
-
 /********************  Setup() **************************/
 void setup() {
 
 	Serial.begin(UART_SPEED);										// init the Monitor window
 	Serial << "\n*** SchedTask " << CAPTION << " ***\n";	// Welcome message to monitor
-
 
 // getNext
 	Serial << "\nTask3 next: " << Task3.getNext();			// get the Next time to dispatch

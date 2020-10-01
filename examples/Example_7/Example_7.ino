@@ -22,14 +22,13 @@ Change Log
 
 	4/16/2020 11:59AM Initial Release
 	05/17/2020 20:54 moved ExampleConstants.h
+	09/30/2020 18:03 removed SoftWareSerial
 */
 
 const char CAPTION[] = "Example 7 delay";
 
 #include <ExampleConstants.h>									// contains various constants used to control the sketch behavior
-#include <SoftwareSerial.h>
 #include <SchedTask.h>
-#include <SchedTaskT.h>
 
 // function declarations required before reference in SchedTask constructors
 void start();

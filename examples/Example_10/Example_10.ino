@@ -21,12 +21,12 @@
 
 Change Log
 	08/22/2020 20:58 Initial Release
+	09/30/2020 19:07 remove SoftwareSerial
 */
 
 const char CAPTION[] = "Example 10 Blink LED in bursts";
 
 #include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
-#include <SoftwareSerial.h>										// for console output
 #include <SchedTask.h>												// include the SchedTask header file
 
 // forward declarations required by SchedTask constructors

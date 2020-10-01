@@ -15,12 +15,12 @@ Change Log
 
 	4/18/2020 20:31 Initial Release
 	05/17/2020 20:54 moved ExampleConstants.h
+	09/30/2020 19:01 removed SoftwareSerial, pCode changed to const unsigned int
 */
 
 const char CAPTION[] = "Example 9 Morse Code 2 LEDs";
 
 #include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
-#include <SoftwareSerial.h>
 #include <SchedTaskT.h>
 
 struct blinker; 														// forward reference
@@ -45,7 +45,7 @@ struct blinker {														// a blinker contains values pertaining to one of 
 	String sentence;													// store for user's sentence
 	int sentenceIdx;													// current index into the sentence (next char)
 
-	int* pCode;															// point to current code
+	const unsigned int* pCode;										// point to current code
 	int pulseIdx;														// current index into the pulses (next pulse duration)
 
 	unsigned long dotDuration;										// duration of one dot (dash is 3x, inter-pulse is 3x, inter-char is 7x)

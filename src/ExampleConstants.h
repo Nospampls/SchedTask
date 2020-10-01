@@ -2,18 +2,18 @@
 
 ExampleConstants.h for SchedTask examples (only)
 
-change log
+Change Log
 
-4/17/2020 2:29PM Initial Release
-7/7/2020 4:12PM make OUTPUT_ENABLED variable not const so user can easily change it in sketch
-08/23/2020 20:48 better yet, make OUTPUT_ENABLED #define so user can override it in sketch
-08/23/2020 20:51 added UL to unsigned long constants to set a good example for users.
+   4/17/2020 2:29PM Initial Release
+   7/7/2020 4:12PM make OUTPUT_ENABLED variable not const so user can easily change it in sketch
+   08/23/2020 20:48 better yet, make OUTPUT_ENABLED #define so user can override it in sketch
+   08/23/2020 20:51 added UL to unsigned long constants to set a good example for users.
+   09/16/2020 16:22 remove SoftwareSerial.h
 
 */
 #ifndef ExampleConstants_h
 #define ExampleConstants_h
 
-#include <SoftwareSerial.h>
 #include <Arduino.h>
 
 template<class T> inline Print &operator <<(Print &obj, T arg) { obj.print(arg); return obj; } // allow use of Serial <<

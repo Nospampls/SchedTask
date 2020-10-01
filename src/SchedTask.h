@@ -238,30 +238,37 @@ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A2J54W4JEHZ
 		05/17/2020 14:49 move constructor definitions
 		08/21/2020 11:25 improved/corrected comments
 		09/01/2020 14:07 added documentation from README.md
+		09/25/2020 10:09 inherit directly from SchedBase
 */
 
 #ifndef SchedTask_h
 #define SchedTask_h
 
-#include <SchedBase.h>
-
-typedef void (*pFunc)();  // pFunc is of Type pointer to a function that takes no argument and returns void
+#include <SchedBase.h> // base class
 
 class SchedTask : public SchedBase {
+	typedef void (*pFunc)();  // pFunc is of Type pointer to a function that takes no argument and returns void
 
 	public:
 
 		SchedTask(unsigned long next, unsigned long period, pFunc pFnc); 			// constructor declaration
 		SchedTask(unsigned long next, unsigned long period, long iterations, pFunc pFnc); // constructor declaration
 		SchedTask();																				// default constructor declaration
+		~SchedTask();																				// destructor
 
-		virtual pFunc getFunc() {return(func);}											// fetch a pointer to the function
-		virtual void setFunc(pFunc pFnc) {func = pFnc;}									// set a new function pointer
+		void setFunc(pFunc pF) {func = pF;}													// set new function pointer
+		pFunc getFunc() {return(func);} 														// return function pointer
 
-	protected:
+	private:
 
-		virtual void callFunc() {func();}													// call the task on behalf of dispatcher
 		pFunc func;																					// the stored address of func
+		virtual void callFunc() {func();}													// call the task on behalf of dispatcher
+		virtual bool checkFunc() {return func != NULL;}									// whether func contains non-NULL
 };
+// Constructor definitions
+SchedTask::SchedTask (unsigned long nxt, unsigned long intval, pFunc fnc) : SchedBase(nxt, intval), func(fnc) {} // constructor definition
+SchedTask::SchedTask (unsigned long nxt, unsigned long intval, long iters, pFunc fnc) : SchedBase(nxt, intval, iters), func(fnc) {} // constructor definition
+SchedTask::SchedTask () : SchedBase(), func(NULL) {} 									// default constructor
+SchedTask::~SchedTask() {;}																	// destructor
 
 #endif

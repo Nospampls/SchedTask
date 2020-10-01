@@ -17,12 +17,12 @@
 
 Change Log
 	08/24/2020 20:40 Initial coding
+	09/30/2020 18:11 change pCode to const unsigned int, remove SoftwareSerial
 */
 
 const char CAPTION[] = "Example 8b Morse Code 1 LED";
 
 #include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
-#include <SoftwareSerial.h>
 #include <SchedTask.h>
 
 // forward declarations needed by SchedTask constructors
@@ -38,7 +38,7 @@ int ledPin = LED_PIN;												// output pin for LED
 String sentence;														// store for user's sentence
 int sentenceIdx;														// current index into the sentence (next char)
 
-int* pCode;																// pointer to current code
+const unsigned int* pCode;																// pointer to current code
 
 /********************  Setup() **************************/
 

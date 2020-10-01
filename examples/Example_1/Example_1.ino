@@ -12,13 +12,12 @@ Change Log
 
 	4/16/2020 11:57AM Initial Release
 	05/17/2020 20:54 moved ExampleConstants.h
+	09/16/2020 16:25 remove SoftwareSerial.h
 */
 
 const char CAPTION[] = "Example 1 Blink LED classic method";
 
 #include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
-#include <SoftwareSerial.h>
-
 
 /********************  Setup() **************************/
 void setup() {

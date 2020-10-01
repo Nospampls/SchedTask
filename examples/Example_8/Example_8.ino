@@ -15,12 +15,12 @@ Change Log
 
 	4/16/2020 11:59AM Initial Release
 	05/17/2020 20:54 moved ExampleConstants.h
+	09/16/2020 16:16 changed type of pCode, remove SoftwareSerial.h
 */
 
 const char CAPTION[] = "Example 8 Morse Code 1 LED";
 
 #include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
-#include <SoftwareSerial.h>
 #include <SchedTask.h>
 
 // forward declarations needed by SchedTask constructors
@@ -35,7 +35,7 @@ SchedTask OffTask (NEVER, ONESHOT, turnOffLED);				// placeholder scheduled task
 String sentence;														// store for user's sentence
 int sentenceIdx;														// current index into the sentence (next char)
 
-int* pCode;																// pointer to current code
+const unsigned int* pCode;																// pointer to current code
 int pulseIdx;															// current index into the pulses (next pulse duration)
 
 unsigned long dotDuration = DOT_DURATION;						// duration of one dot (dash is 3x, inter-pulse is 3x, inter-char is 7x)

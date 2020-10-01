@@ -15,12 +15,11 @@ Change Log
 
 	4/16/2020 11:59AM Initial Release
 	05/17/2020 20:54 moved ExampleConstants.h
+	09/16/2020 16:32 removed SoftwareSerial.h
 */
 const char CAPTION[] = "Example 4 Blink 2 LEDs";
 
 #include <ExampleConstants.h>										// contains various constants used to control the sketch behavior
-#include <SoftwareSerial.h>
-
 #include <SchedTaskT.h>												// NEWLY ADDED
 
 // required declarations before use by SchedTask constructors
