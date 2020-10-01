@@ -5,23 +5,14 @@ https://www.youtube.com/watch?v=nZHBbSkVUSo&list=PL69rZyCQYu-SrPAZUc2Lj_zsjPLxtI
 To make a small (secure) appreciation donation see:
 https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A2J54W4JEHZ6C
 
-	SchedBase.h - header file for SchedTask base class
+SchedBase.h - header file for SchedTask base class
 
-	SchedTaskT and SchedTask are derived from SchedBase
-	See those header files for usage
+SchedTaskT and SchedTask are derived from SchedBase
+See those header files for usage
 
-	changes:
-		10/19/2017 6:17PM initial coding
-		3/9/2020 12:47PM updated
-		3/12/2020 9:04AM more virtual functions
-		4/24/2020 5:07PM changed #include for vector.h
-		05/17/2020 14:26 remove NEVER, NOW, ONESHOT consts and make them #defines
-		7/4/2020 10:44AM remove obsolete commented out setNext definition, added comment to declaration
-		08/20/2020 23:54 use linked list of tasks rather than vector of tasks
-		09/15/2020 15:20 moved include arduino.h up, add new #defines
-		09/16/2020 14:28 eliminate default virtual function definitions
-		09/20/2020 19:19 SchedTask inherits from SchedTaskT inherits from SchedBase
-		09/25/2020 10:07 SchedTask and SchedTaskT each inherit from SchedBase
+changes:
+	10/19/2017 6:17PM initial coding
+	10/01/2020 14:37 revisions for release 1.1.0
 */
 
 #ifndef SchedBase_h

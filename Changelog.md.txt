@@ -34,3 +34,11 @@ Use linked list rather than vector for task list.
 Added support for task iterations to limit dispatches.
 Added Example_10 and Example_11 to illustrate use of iterations.
 Expanded documentation in comments in SchedTask.h and SchedTastT.h.
+
+1.1.0
+10/01/2020
+
+Changes to support other platforms.  The library should now compile for
+ESP32 and ESP8266 platforms though they have not been tested.
+Member functions setFunc and getFunc for SchedTaskT are now deprecated
+and replaced by setFuncT and getFuncT. See README.md or comments in the .h files.

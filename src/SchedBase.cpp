@@ -10,16 +10,7 @@ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A2J54W4JEHZ
 	changes:
 
 		10/19/2017 6:27PM initial coding
-		10/21/2017 1:11PM clean up
-		3/12/2020 1:55PM callFunc virtual
-		05/17/2020 17:56 move definitions
-		7/4/2020 10:25AM correct handling of NEVER if passed in setNext()
-		7/6/2020 10:54PM handle millis() overflow at 49 days
-		08/20/2020 23:48 use linked list of tasks rather than vector of tasks
-		08/21/2020 12:57 add support for iterations, backward compatible
-		09/15/2020 15:22 addTask now returns task count
-		09/16/2020 16:18 remove SoftwareSerial
-		09/30/2020 16:40 minor changes, add destructor
+		10/01/2020 14:38 revisions for release 1.1.0
 */
 
 #include <SchedBase.h>
