@@ -13,6 +13,7 @@ See those header files for usage
 changes:
 	10/19/2017 6:17PM initial coding
 	10/01/2020 14:37 revisions for release 1.1.0
+	10/12/2020 14:09 make callFunc and checkFunc pure virtual
 */
 
 #ifndef SchedBase_h
@@ -71,9 +72,9 @@ class SchedBase {
 		int iterations;													// iterations (-1 means not specified)
 		int taskID;															// 0, 1, ... in order of instatiation
 
-		int addTask(SchedBase*);										// add another task to the linked list
-		virtual void callFunc() {;}									// have the derived class call the task
-		virtual bool checkFunc() {;}									// whether func is non-NULL
+		int addTask(SchedBase*);										// add another task to the linked list								
+		virtual void callFunc() =0;									// have the derived class call the task
+		virtual bool checkFunc() =0;									// whether func is non-NULL
 };
 
 #endif

@@ -42,3 +42,8 @@ Changes to support other platforms.  The library should now compile for
 ESP32 and ESP8266 platforms though they have not been tested.
 Member functions setFunc and getFunc for SchedTaskT are now deprecated
 and replaced by setFuncT and getFuncT. See README.md or comments in the .h files.
+
+1.1.1
+10/13/2020
+
+Minor changes to eliminate some warnings/errors when compiling with PlatformIO.

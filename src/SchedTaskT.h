@@ -350,6 +350,8 @@ Write your functions:
 
 		9/23/2014 7:44PM initial coding
 		10/01/2020 14:53 revisions for release 1.1.0
+		10/13/2020 10:48 getFunc() to return nullptr to remove warning in PlatformIO compiler
+		10/13/2020 10:58 changed order of func and parm to remove warning in Platform() compiler
 */
 
 #ifndef SchedTaskT_h
@@ -381,11 +383,11 @@ class SchedTaskT : public SchedBase {
 
 	private:
 
-		T parm;																// parameter of type T to be passed to dispatched task
 		pFuncT func;														// address of function to call with parameter of type T
+		T parm;																// parameter of type T to be passed to dispatched task
 
 		void setFunc(pFunc pF) {;} 									// overrides pure virtual in base so this class not abstract
-		pFunc getFunc() {;} 												// overrides pure virtual in base so this class not abstract
+		pFunc getFunc() {return nullptr;}							// overrides pure virtual in base so this class not abstract
 
 		virtual void callFunc() {func(parm);}						// call the function with parameter on behalf of dispatcher
 		virtual bool checkFunc() {return func != NULL;}			// whether func is non-NULL
