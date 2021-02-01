@@ -47,3 +47,10 @@ and replaced by setFuncT and getFuncT. See README.md or comments in the .h files
 10/13/2020
 
 Minor changes to eliminate some warnings/errors when compiling with PlatformIO.
+
+1.1.2
+02/01/202013
+
+Correct description comment in SchedTaskT.h.
+Moved construction and destructor definitions from SchedTask.h to new file SchedTask.cpp.
+This will allow a module to compile and support SchedTask and SchedTaskT.

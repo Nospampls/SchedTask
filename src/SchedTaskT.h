@@ -7,6 +7,9 @@ https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A2J54W4JEHZ
 
 SchedTaskT.h - header file for the SchedTaskT template class, derived from SchedBase.
 
+Change Log for description
+	02/01/2021 14:26 corrected reference to setArg should be setParm
+
 This class constructs an object defining a task to be dispatched periodically that receives a parameter.
 
 (See also SchedTask.h which dispatches a task without passing a parameter.)
@@ -78,7 +81,7 @@ Examples:
 			and:
 			NotYet.setFunc(funcName);						// when it's time to dispatch, dispatch funcName
 			and
-			NotYet.setArg(param + 10);						// change the parameter to pass
+			NotYet.setParm(param + 10);					// change the parameter to pass
 
 	SchedTaskT<> Iterated(NOW, 1000, 5, someFunc, param); // dispatch someFunc immediately and every second thereafter, 5 times
 
