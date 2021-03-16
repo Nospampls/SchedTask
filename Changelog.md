@@ -54,3 +54,9 @@ Minor changes to eliminate some warnings/errors when compiling with PlatformIO.
 Correct description comment in SchedTaskT.h.
 Moved construction and destructor definitions from SchedTask.h to new file SchedTask.cpp.
 This will allow a module to compile and support SchedTask and SchedTaskT.
+
+1.1.3
+3/15/2021
+
+Changed default constructors.
+

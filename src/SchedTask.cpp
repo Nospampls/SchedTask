@@ -8,5 +8,5 @@ changes
 // Constructor definitions
 SchedTask::SchedTask (unsigned long nxt, unsigned long intval, pFunc fnc) : SchedBase(nxt, intval), func(fnc) {} // constructor definition
 SchedTask::SchedTask (unsigned long nxt, unsigned long intval, long iters, pFunc fnc) : SchedBase(nxt, intval, iters), func(fnc) {} // constructor definition
-SchedTask::SchedTask () : SchedBase(), func(NULL) {} 									// default constructor
+SchedTask::SchedTask () : func(NULL) {} 									// default constructor
 SchedTask::~SchedTask() {;}																// destructor

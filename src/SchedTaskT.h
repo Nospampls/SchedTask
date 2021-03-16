@@ -355,6 +355,7 @@ Write your functions:
 		10/01/2020 14:53 revisions for release 1.1.0
 		10/13/2020 10:48 getFunc() to return nullptr to remove warning in PlatformIO compiler
 		10/13/2020 10:58 changed order of func and parm to remove warning in Platform() compiler
+		2021-03-12 11:07:59 changed default constructors
 */
 
 #ifndef SchedTaskT_h
@@ -372,10 +373,9 @@ class SchedTaskT : public SchedBase {
 		SchedTaskT(unsigned long next, unsigned long period, pFuncT fun, T arg); // constructor w/ parameter to pass
 		SchedTaskT(unsigned long next, unsigned long period); // constructor with only next and period
 		SchedTaskT(unsigned long next, unsigned long period, pFuncT); // constructor with func, no parameter
-		SchedTaskT(unsigned long next, unsigned long period, long iterations, pFuncT fun, T arg); // constructor w/ parameter to pass
+		SchedTaskT(unsigned long next = NEVER, unsigned long period = ONESHOT, long iterations = 0UL, pFuncT fun = nullptr, T arg = 0); // default constructor
 		SchedTaskT(unsigned long next, unsigned long period, long iterations, pFuncT fun);
 		SchedTaskT(unsigned long next, unsigned long period, long iterations); // constructor with next, period, iterations
-		SchedTaskT();														// default constructor declaration
 		~SchedTaskT();														// destructor
 
 		void setFunc(pFuncT pF) {func = pF;}						// set new function pointer
@@ -402,11 +402,9 @@ typedef SchedTaskT<SchedBase*>* SchedTaskTptr;					// used for pointer to SchedT
 template <typename T> SchedTaskT<T>::SchedTaskT (unsigned long nxt, unsigned long intval, pFuncT pFnc, T arg) : SchedBase(nxt, intval), func(pFnc), parm(arg) {} // constructor template
 template <typename T> SchedTaskT<T>::SchedTaskT (unsigned long nxt, unsigned long intval) : SchedBase (nxt, intval) {}
 template <typename T> SchedTaskT<T>::SchedTaskT (unsigned long nxt, unsigned long intval, pFuncT pFnc) : SchedBase (nxt, intval), func(pFnc) {}
-template <typename T> SchedTaskT<T>::SchedTaskT (unsigned long nxt, unsigned long intval, long iters, pFuncT pFnc, T arg) : SchedBase(nxt, intval, iters), func(pFnc), parm(arg) {} // constructor template
+template <typename T> SchedTaskT<T>::SchedTaskT (unsigned long nxt, unsigned long intval, long iters, pFuncT pFnc, T arg) : func(pFnc), parm(arg) {} // default constructor template
 template <typename T> SchedTaskT<T>::SchedTaskT (unsigned long nxt, unsigned long intval, long iters, pFuncT pFnc) : SchedBase(nxt, intval, iters), func(pFnc) {} // constructor template
-
 template <typename T> SchedTaskT<T>::SchedTaskT (unsigned long nxt, unsigned long intval, long iters) {}
-template <typename T> SchedTaskT<T>::SchedTaskT() : SchedBase(), func(nullptr), parm(0) {}	// default constructor template
 template <typename T> SchedTaskT<T>::~SchedTaskT() {;}													// destructor
 
 #endif

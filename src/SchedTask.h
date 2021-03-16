@@ -302,6 +302,7 @@ Write your functions:
 		9/23/2014 7:44PM initial coding
 		10/01/2020 14:39 revisions for release 1.1.0
 		02/01/2021 14:19 moved constructor and destructor definitions to new file SchedTask.cpp to allow modules to use SchedTask
+      2021-03-12 11:05:45 changed default constructor definitions to include defaults
 */
 
 #ifndef SchedTask_h
@@ -315,7 +316,7 @@ class SchedTask : public SchedBase {
 	public:
 
 		SchedTask(unsigned long next, unsigned long period, pFunc pFnc); 			// constructor declaration
-		SchedTask(unsigned long next, unsigned long period, long iterations, pFunc pFnc); // constructor declaration
+		SchedTask(unsigned long next, unsigned long period, long iterations, pFunc pFnc); // default constructor declaration
 		SchedTask();																				// default constructor declaration
 		~SchedTask();																				// destructor
 
