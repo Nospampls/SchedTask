@@ -60,3 +60,10 @@ This will allow a module to compile and support SchedTask and SchedTaskT.
 
 Changed default constructors.
 
+1.1.4
+9/27/2021
+
+Added a constructor for SchedTaskT for all parameters passed.
+Replaced the default constructor.
+
+
